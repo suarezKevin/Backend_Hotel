@@ -55,4 +55,17 @@ public class HabitacionService {
         return habitacionToEdit;
     }
 
+    //cambiar estado de la habitacion
+    public Habitacion changeEstadoHabitacion(Long idhabitacion){
+        Habitacion habitacion = getHabitacion(idhabitacion);
+        habitacion.setEstado(true);
+        return habitacion;
+    }
+
+    //verificar estado de la habitacion
+    public Boolean checkHabitacion(Long idhabitacion){
+        Habitacion habitacion = getHabitacion(idhabitacion);
+        return habitacion.getEstado();
+    }
+
 }

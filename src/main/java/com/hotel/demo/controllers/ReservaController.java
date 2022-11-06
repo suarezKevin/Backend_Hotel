@@ -29,11 +29,13 @@ public class ReservaController {
     }
 
     @PostMapping(value = "/{idhabitacion}")
-    public ResponseEntity<ReservaDto> addReserva(@PathVariable final Long idhabitacion, @RequestBody final ReservaDto reservaDto){
-        Reserva reserva = reservaService.addReserva(Reserva.from(reservaDto));
-        Habitacion habitacion = habitacionService.getHabitacion(idhabitacion);
-        habitacion.setEstado(Boolean.TRUE);
-        return new ResponseEntity<>(ReservaDto.from(reserva), HttpStatus.OK);
+    public ResponseEntity<?> addReserva(@PathVariable final Long idhabitacion, @RequestBody final ReservaDto reservaDto){
+        if(!habitacionService.checkHabitacion(idhabitacion)){
+            Reserva reserva = reservaService.addReserva(Reserva.from(reservaDto));
+            Habitacion habitacion = habitacionService.changeEstadoHabitacion(idhabitacion);
+            return new ResponseEntity<>(ReservaDto.from(reserva), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("La habitacion está ocupada", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping
