@@ -51,6 +51,8 @@ public class ReservaService {
         Reserva reservaToEdit = getReserva(idReserva);
         reservaToEdit.setFechasalida(reserva.getFechasalida());
         reservaToEdit.setPagohabitacion(reserva.getPagohabitacion());
+        reservaToEdit.setCliente(reserva.getCliente());
+        reservaToEdit.setHabitacion(reserva.getHabitacion());
         return reservaToEdit;
     }
 

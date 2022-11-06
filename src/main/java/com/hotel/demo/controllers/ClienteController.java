@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/clientes")
-
 //http://localhost:9095/hotel/clientes
 
 public class ClienteController {
@@ -55,6 +54,5 @@ public class ClienteController {
         Cliente cliente = clienteService.updateCliente(idcliente, Cliente.from(clienteDto));
         return new ResponseEntity<>(ClienteDto.from(cliente), HttpStatus.OK);
     }
-
 
 }

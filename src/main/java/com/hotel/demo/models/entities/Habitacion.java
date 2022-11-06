@@ -1,5 +1,6 @@
 package com.hotel.demo.models.entities;
 
+import com.hotel.demo.models.dto.HabitacionDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class Habitacion {
     @Column(name = "id_habitacion", length = 15)
     private Long id;
 
-    @Column(name = "numero_habitacion", length = 15, nullable = false)
+    @Column(name = "numero_habitacion", length = 15, nullable = false, unique = true)
     private Integer numero;
 
     @Column(name = "estado_habitacion", nullable = false)
@@ -30,5 +31,15 @@ public class Habitacion {
 
     @Column(name = "precio_habitacion", length = 15, nullable = false)
     private Double precio;
+
+    public static Habitacion from(HabitacionDto habitacionDto){
+        Habitacion habitacion = new Habitacion();
+        habitacion.setId(habitacionDto.getId());
+        habitacion.setNumero(habitacionDto.getNumero());
+        habitacion.setEstado(habitacionDto.getEstado());
+        habitacion.setTipo(habitacionDto.getTipo());
+        habitacion.setPrecio(habitacionDto.getPrecio());
+        return habitacion;
+    }
 
 }

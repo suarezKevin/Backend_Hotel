@@ -1,6 +1,8 @@
 package com.hotel.demo.models.entities;
 
 import ch.qos.logback.core.net.server.Client;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hotel.demo.models.dto.ReservaDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,14 +33,31 @@ public class Reserva {
     @Column(name = "pago_habitacion", nullable = false)
     private Boolean pagohabitacion;
 
+    @JsonIgnore
     @ManyToOne(
             fetch = FetchType.LAZY
     )
     public Cliente cliente;
 
+    @JsonIgnore
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    public Habitacion habitacion;
 
     @PrePersist
     public void prePersist(){
         fechaentrada = new Date();
+    }
+
+    public static Reserva from(ReservaDto reservaDto){
+        Reserva reserva = new Reserva();
+        reserva.setIdreserva(reservaDto.getIdreserva());
+        reserva.setFechaentrada(reservaDto.getFechaentrada());
+        reserva.setFechasalida(reservaDto.getFechasalida());
+        reserva.setPagohabitacion(reservaDto.getPagohabitacion());
+        reserva.setCliente(reservaDto.getCliente());
+        reserva.setHabitacion(reservaDto.getHabitacion());
+        return reserva;
     }
 }
