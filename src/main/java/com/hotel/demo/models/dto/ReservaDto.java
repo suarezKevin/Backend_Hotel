@@ -8,18 +8,19 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 
-public class ReservaDto {
+public class ReservaDto implements Serializable {
 
     private Long idreserva;
     private Date fechaentrada;
     private Date fechasalida;
     private Boolean pagohabitacion;
-    public Cliente cliente;
-    public Habitacion habitacion;
+    public Long clienteid;
+    public Long habitacionid;
 
     public static ReservaDto from(Reserva reserva){
         ReservaDto reservaDto = new ReservaDto();
@@ -27,8 +28,8 @@ public class ReservaDto {
         reservaDto.setFechaentrada(reserva.getFechaentrada());
         reservaDto.setFechasalida(reserva.getFechasalida());
         reservaDto.setPagohabitacion(reserva.getPagohabitacion());
-        //reservaDto.setCliente(reserva.getCliente());
-        //reservaDto.setHabitacion(reserva.getHabitacion());
+        reservaDto.setClienteid(reserva.getCliente().getId());
+        reservaDto.setHabitacionid(reserva.getHabitacion().getId());
         return reservaDto;
     }
 

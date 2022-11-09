@@ -16,7 +16,7 @@ import java.util.stream.StreamSupport;
 @Transactional
 
 public class ClienteService {
-    private final ClienteRepository clienteRepository;
+    private static ClienteRepository clienteRepository;
     private final ReservaService reservaService;
 
     @Autowired
@@ -37,7 +37,7 @@ public class ClienteService {
     }
 
     //obtener un cliente por id
-    public Cliente getCliente(Long idcliente){
+    public static Cliente getCliente(Long idcliente){
         return clienteRepository.findById(idcliente).orElseThrow(() ->
                 new ClienteNotFoundException(idcliente));
     }

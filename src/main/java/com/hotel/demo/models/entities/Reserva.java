@@ -2,12 +2,19 @@ package com.hotel.demo.models.entities;
 
 import ch.qos.logback.core.net.server.Client;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hotel.demo.models.dto.ReservaDto;
+import com.hotel.demo.repository.ClienteRepository;
+import com.hotel.demo.services.ClienteService;
+import com.hotel.demo.services.HabitacionService;
+import com.hotel.demo.services.ReservaService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -16,8 +23,9 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "reservas")
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
-public class Reserva {
+public class Reserva implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,13 +41,11 @@ public class Reserva {
     @Column(name = "pago_habitacion", nullable = false)
     private Boolean pagohabitacion;
 
-    @JsonIgnore
     @ManyToOne(
             fetch = FetchType.LAZY
     )
     public Cliente cliente;
 
-    @JsonIgnore
     @ManyToOne(
             fetch = FetchType.LAZY
     )
@@ -50,14 +56,15 @@ public class Reserva {
         fechaentrada = new Date();
     }
 
+
     public static Reserva from(ReservaDto reservaDto){
         Reserva reserva = new Reserva();
         reserva.setIdreserva(reservaDto.getIdreserva());
         reserva.setFechaentrada(reservaDto.getFechaentrada());
         reserva.setFechasalida(reservaDto.getFechasalida());
         reserva.setPagohabitacion(reservaDto.getPagohabitacion());
-        reserva.setCliente(reservaDto.getCliente());
-        reserva.setHabitacion(reservaDto.getHabitacion());
+        reserva.setCliente(ClienteService.getCliente(reservaDto.getClienteid().longValue()));
+        reserva.setHabitacion(HabitacionService.getHabitacion(reservaDto.getHabitacionid().longValue()));
         return reserva;
     }
 }

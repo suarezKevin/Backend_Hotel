@@ -1,6 +1,7 @@
 package com.hotel.demo.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hotel.demo.models.dto.ClienteDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "clientes")
 @Data
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
 public class Cliente {
 

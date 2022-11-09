@@ -1,6 +1,7 @@
 package com.hotel.demo.controllers;
 
 import com.hotel.demo.models.dto.ReservaDto;
+import com.hotel.demo.models.dto.ResponseReservaDto;
 import com.hotel.demo.models.entities.Cliente;
 import com.hotel.demo.models.entities.Habitacion;
 import com.hotel.demo.models.entities.Reserva;
@@ -38,18 +39,15 @@ public class ReservaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful registration",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Cliente.class)) }),
-            @ApiResponse(responseCode = "500", description = "Invalid data in the form",
-                    content = @Content),
-            @ApiResponse(responseCode = "503", description = "Server error",
-                    content = @Content)})
+                            schema = @Schema(implementation = Cliente.class)) })
+    })
 
-    @PostMapping(value = "/{idhabitacion}")
-    public ResponseEntity<?> addReserva(@PathVariable final Long idhabitacion, @RequestBody final ReservaDto reservaDto){
-        if(!habitacionService.checkHabitacion(idhabitacion)){
+    @PostMapping
+    public ResponseEntity<?> addReserva(@RequestBody final ReservaDto reservaDto){
+        if(!habitacionService.checkHabitacion(reservaDto.getHabitacionid())){
             Reserva reserva = reservaService.addReserva(Reserva.from(reservaDto));
-            Habitacion habitacion = habitacionService.changeEstadoHabitacion(idhabitacion);
-            return new ResponseEntity<>(ReservaDto.from(reserva), HttpStatus.OK);
+            Habitacion habitacion = habitacionService.changeEstadoHabitacion(reservaDto.getHabitacionid());
+            return new ResponseEntity<>(ResponseReservaDto.from(reserva), HttpStatus.OK);
         }
         return new ResponseEntity<>("La habitación actualmente está ocupada", HttpStatus.BAD_REQUEST);
     }
@@ -58,14 +56,13 @@ public class ReservaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Cliente.class)) }),
-            @ApiResponse(responseCode = "503", description = "Server error",
-                    content = @Content)})
+                            schema = @Schema(implementation = Cliente.class)) })
+    })
 
     @GetMapping
-    public ResponseEntity<List<ReservaDto>> getReservas(){
+    public ResponseEntity<List<ResponseReservaDto>> getReservas(){
         List<Reserva> reservaList = reservaService.getReservas();
-        List<ReservaDto> reservaDtoList = reservaList.stream().map(ReservaDto::from).collect(Collectors.toList());
+        List<ResponseReservaDto> reservaDtoList = reservaList.stream().map(ResponseReservaDto::from).collect(Collectors.toList());
         return new ResponseEntity<>(reservaDtoList, HttpStatus.OK);
     }
 
@@ -73,48 +70,39 @@ public class ReservaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Cliente.class)) }),
-            @ApiResponse(responseCode = "404", description = "Reservation not found",
-                    content = @Content),
-            @ApiResponse(responseCode = "503", description = "Server error",
-                    content = @Content)})
+                            schema = @Schema(implementation = Cliente.class)) })
+    })
 
     @GetMapping(value = "/{idreserva}")
-    public ResponseEntity<ReservaDto> getReserva(@PathVariable final Long idreserva){
+    public ResponseEntity<ResponseReservaDto> getReserva(@PathVariable final Long idreserva){
         Reserva reserva = reservaService.getReserva(idreserva);
-        return new ResponseEntity<>(ReservaDto.from(reserva), HttpStatus.OK);
+        return new ResponseEntity<>(ResponseReservaDto.from(reserva), HttpStatus.OK);
     }
 
     @Operation(summary = "Delete one Reservation by Id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully delete",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Cliente.class)) }),
-            @ApiResponse(responseCode = "404", description = "Reservation not found",
-                    content = @Content),
-            @ApiResponse(responseCode = "503", description = "Server error",
-                    content = @Content)})
+                            schema = @Schema(implementation = Cliente.class)) })
+    })
 
     @DeleteMapping(value = "/{idreserva}")
-    public ResponseEntity<ReservaDto> deleteReserva(@PathVariable final Long idreserva){
+    public ResponseEntity<ResponseReservaDto> deleteReserva(@PathVariable final Long idreserva){
         Reserva reserva = reservaService.deleteReserva(idreserva);
-        return new ResponseEntity<>(ReservaDto.from(reserva), HttpStatus.OK);
+        return new ResponseEntity<>(ResponseReservaDto.from(reserva), HttpStatus.OK);
     }
 
     @Operation(summary = "Update one Reservation")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Successfully updated",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Cliente.class)) }),
-            @ApiResponse(responseCode = "404", description = "Reservation not found",
-                    content = @Content),
-            @ApiResponse(responseCode = "503", description = "Server error",
-                    content = @Content)})
+                            schema = @Schema(implementation = Cliente.class)) })
+    })
 
     @PutMapping(value = "/{idreserva}")
-    public ResponseEntity<ReservaDto> updateReserva(@PathVariable final Long idreserva, @RequestBody final ReservaDto reservaDto){
+    public ResponseEntity<ResponseReservaDto> updateReserva(@PathVariable final Long idreserva, @RequestBody final ReservaDto reservaDto){
         Reserva reserva = reservaService.updateReserva(idreserva, Reserva.from(reservaDto));
-        return new ResponseEntity<>(ReservaDto.from(reserva), HttpStatus.OK);
+        return new ResponseEntity<>(ResponseReservaDto.from(reserva), HttpStatus.OK);
     }
 
 }

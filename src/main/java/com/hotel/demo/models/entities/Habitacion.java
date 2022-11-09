@@ -1,5 +1,6 @@
 package com.hotel.demo.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hotel.demo.models.dto.HabitacionDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "habitaciones")
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 //id, numero, estado, tipo, pago y precio
 public class Habitacion {
 

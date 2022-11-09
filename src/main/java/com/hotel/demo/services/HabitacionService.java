@@ -16,7 +16,7 @@ import java.util.stream.StreamSupport;
 
 public class HabitacionService {
 
-    private HabitacionRepository habitacionRepository;
+    private static HabitacionRepository habitacionRepository;
 
     @Autowired
     public HabitacionService(HabitacionRepository habitacionRepository){
@@ -34,7 +34,7 @@ public class HabitacionService {
     }
 
     //obtener una habitacion por id
-    public Habitacion getHabitacion(Long idHabitacion){
+    public static Habitacion getHabitacion(Long idHabitacion){
         return habitacionRepository.findById(idHabitacion).orElseThrow(() ->
                 new HabitacionNotFoundException(idHabitacion));
     }
