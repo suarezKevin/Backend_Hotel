@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value="/clientes")
+@RequestMapping(value="/protected/clientes")
 //http://localhost:9095/hotel/clientes
 
 public class ClienteController {

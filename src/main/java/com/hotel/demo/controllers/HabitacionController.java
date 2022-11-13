@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/habitaciones")
+@RequestMapping(value = "/protected/habitaciones")
 //http://localhost:9095/hotel/habitaciones
 
 public class HabitacionController {

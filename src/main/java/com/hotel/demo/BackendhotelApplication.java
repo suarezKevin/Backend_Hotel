@@ -13,7 +13,7 @@ public class BackendhotelApplication {
 		SpringApplication.run(BackendhotelApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
@@ -23,5 +23,5 @@ public class BackendhotelApplication {
 
 			}
 		};
-	}
+	}*/
 }

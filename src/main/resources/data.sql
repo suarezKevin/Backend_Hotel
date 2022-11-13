@@ -1,0 +1,1 @@
+INSERT  IGNORE INTO roles (id_rol, tipo) VALUES(1 ,'USER');
