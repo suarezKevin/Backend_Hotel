@@ -20,7 +20,7 @@ public class ResponseReservaDto {
 
     public static ResponseReservaDto from(Reserva reserva){
         ResponseReservaDto responseReservaDto = new ResponseReservaDto();
-        responseReservaDto.setIdreserva(reserva.getIdreserva());
+        responseReservaDto.setIdreserva(reserva.getId());
         responseReservaDto.setFechaentrada(reserva.getFechaentrada());
         responseReservaDto.setFechasalida(reserva.getFechasalida());
         responseReservaDto.setPagohabitacion(reserva.getPagohabitacion());

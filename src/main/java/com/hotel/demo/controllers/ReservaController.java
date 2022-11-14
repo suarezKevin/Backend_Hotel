@@ -44,9 +44,9 @@ public class ReservaController {
 
     @PostMapping
     public ResponseEntity<?> addReserva(@RequestBody final ReservaDto reservaDto){
-        if(!habitacionService.checkHabitacion(reservaDto.getHabitacionid())){
+        if(!habitacionService.checkHabitacion(reservaDto.getHabitacion())){
             Reserva reserva = reservaService.addReserva(Reserva.from(reservaDto));
-            Habitacion habitacion = habitacionService.changeEstadoHabitacion(reservaDto.getHabitacionid());
+            Habitacion habitacion = habitacionService.changeEstadoHabitacion(reservaDto.getHabitacion());
             return new ResponseEntity<>(ResponseReservaDto.from(reserva), HttpStatus.OK);
         }
         return new ResponseEntity<>("La habitación actualmente está ocupada", HttpStatus.BAD_REQUEST);
